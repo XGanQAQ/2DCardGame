@@ -1,4 +1,5 @@
 using System;
+using GamePlay;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,28 +13,34 @@ public class GameManager:MonoBehaviour
             return _instance;
         }
     }
-
+    
+    public CardFactory CardFactory;
+    public string CardDataPath = "CardConfig";
+    
+    public HandCardsManager HandCardsManager;
+    public Store Store;
+    
     public Action OnGameStart;
     public Action OnGameEnd;
     public Action OnGamePause;
     public Action OnTurnStart;
     public Action OnTurnEnd;
     
+    public PlayerData PlayerData;
     public bool IsGameStart;
-    public int defeatBaseCount;
-    public int turnCount;
-    public int myMoney;
-    //public int waste;
 
     private void Awake()
     {
         _instance = this;
+        CardFactory = new CardFactory(CardDataPath);
+        CardFactory.LoadCardData();
+        Store = new Store(CardFactory);
     }
 
     private void Start()
     {
-        Instance.OnGameStart+=InitStartGame;
-        Instance.OnTurnEnd+=EndGameCheck;
+        OnGameStart+=InitStartGame;
+        OnTurnEnd+=EndGameCheck;
     }
 
     private void Update()
@@ -41,6 +48,7 @@ public class GameManager:MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)&&!IsGameStart)
         {
             StartGame();
+            IsGameStart = true;
         }
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -53,47 +61,38 @@ public class GameManager:MonoBehaviour
     }
 
     public void InitStartGame()
-    {
-        turnCount = 0;
-        myMoney = 10;
+    { 
+        PlayerData.turnCount = 0;
+        PlayerData.myMoney = 100;
         //waste = 5;
     }
 
     public void EndGameCheck()
     {
-        if(myMoney <= 0)
-        {
-            Debug.Log("myMoney Count <= 0, Game Over");
-            EndGame();
-        }
-        else
-        {
-            Debug.Log("You have " + myMoney + " myMoney" + " and " + defeatBaseCount + " defeat base");
-        }
     }
     
     //触发游戏开始事件
     public void StartGame()
     {
-        OnGameStart.Invoke();
+        OnGameStart?.Invoke();
     }
     
     //触发游戏结束事件
     public void EndGame()
     {
-        OnGameEnd.Invoke();
+        OnGameEnd?.Invoke();
     }
     
     //触发游戏暂停事件
     public void PauseGame()
     {
-        OnGamePause.Invoke();
+        OnGamePause?.Invoke();
     }
     
     //触发回合开始事件
     public void StartTurn()
     {
-        turnCount++;
+        PlayerData.turnCount++;
         OnTurnStart?.Invoke();
     }
     

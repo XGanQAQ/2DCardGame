@@ -33,18 +33,24 @@ public class HandCards
     
     //抽牌
     //从卡池抽取count张牌
-    public void DrewCards(CardsPool card,int count)
+    public void DrewCards(CardsPool cardPool,int count)
     {
         for (int i = 0; i < count; i++)
         {
             if (_cards.Count>=MaxHandCardsCount)
             {
-                Debug.Log("手牌已满");
+                Debug.Log("INFO:你的手牌已满，无法继续抽牌");
                 break;
             }
-            _cards.Add(card.GetCard());
+            var card = cardPool.GetCard();
+            if (card==null)
+            {
+                Debug.Log("INFO:卡池已空");
+                break;
+            }
+            _cards.Add(cardPool.GetCard());
+            TriggerOnCardDrew();
         }
-        TriggerOnCardDrew();
     }
     
     //出牌
@@ -54,7 +60,7 @@ public class HandCards
         {
             _cards.Remove(card);
         }
-        card.Play();
+        card.PlayCard();
         TriggerOnCardPlayed();
     }
     

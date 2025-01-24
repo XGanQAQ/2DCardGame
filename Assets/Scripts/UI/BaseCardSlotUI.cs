@@ -10,7 +10,6 @@ namespace UI
         private Selectable _selectable;
         private BaseCardSlot _baseCardSlot;
         private BaseMinionCardUI _baseMinionCardUI;
-        private BaseSpellCardUI _baseSpellCardUI;
 
         private void Start()
         {
@@ -23,6 +22,11 @@ namespace UI
 
         }
 
+        public Base GetDependentBase()
+        {
+           return  _baseCardSlot.GetTargetBase();
+        }
+        
         public void InitBaseCardSlotUI(BaseCardSlot baseCardSlot)
         {
             _baseCardSlot = baseCardSlot;
@@ -48,9 +52,7 @@ namespace UI
             }
             else if (card is SpellCard)
             {
-                _baseSpellCardUI = Instantiate(Resources.Load<GameObject>("Prefabs/UI/BaseSpellCardUI"), transform)
-                    .GetComponent<BaseSpellCardUI>();
-                _baseSpellCardUI.InitBaseSpellCardUI((SpellCard) card);
+                Debug.Log("Spell Card can't be Inserted to the Slot");
             }
             else
             {

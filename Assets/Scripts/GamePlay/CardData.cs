@@ -6,12 +6,14 @@ public class CardData : ScriptableObject
 {
     public int Id;
     public string Name;
+    public string Description;
     public PlayableCardType CardType;
     public CardRarity Rarity;
+    public int Level;
     public int PlayMoney;
     public int Attack;
-    public IEffect Effect;
-    public string Description;
+    public EffectType EffectType;
+    public int EffectValue;
 }
 
 public enum CardRarity
@@ -26,5 +28,4 @@ public enum PlayableCardType
 {
     Spell,
     Minion,
-    Special
 }

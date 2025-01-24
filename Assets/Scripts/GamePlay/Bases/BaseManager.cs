@@ -62,7 +62,7 @@ namespace GamePlay
                 if (baseItem.BaseDestroyCheck())
                 {
                     baseItem.DestroyBase();
-                    baseItem.GetBaseReward();
+                    baseItem.GetBaseReward(GameManager.Instance.PlayerData);
                     BasesList.Remove(baseItem); //从列表中移除
                     baseCount--; //因为移除了一个元素，所以总数减一
                     i--; //因为移除了一个元素，所以索引减一
@@ -87,8 +87,8 @@ namespace GamePlay
         {
             if (BasesList.Count < maxBaseCount)
             {
-                int maxHp = Random.Range(30,40); 
-                int money = Random.Range(30,40);
+                int maxHp = Random.Range(10,20); 
+                int money = Random.Range(10,20);
                 int maxCardSlotsNumber = 6;
                 Base newBae = new Base(maxHp, money, maxCardSlotsNumber);
                 BasesList.Add(newBae);

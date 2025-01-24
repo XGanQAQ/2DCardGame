@@ -82,7 +82,7 @@ namespace UI
                     _cardSlotsUIList.Add(baseCardSlotUI);
                 }
             }
-            Debug.Log("Create CardSlots Over");
+            //Debug.Log("INFO:Create CardSlots Over");
         }
         
         private void GetAllCardSlotsInGroupChild()

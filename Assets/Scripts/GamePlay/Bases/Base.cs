@@ -94,10 +94,10 @@ namespace GamePlay
             OnBaseDestroy?.Invoke(this);
         }
         
-        public void GetBaseReward()
+        public void GetBaseReward(PlayerData playerData)
         {
-            GameManager.Instance.myMoney += Money;
-            GameManager.Instance.defeatBaseCount++;
+            playerData.myMoney += Money;
+            playerData.defeatBaseCount++;
         }
     }
 }

@@ -13,10 +13,11 @@ namespace GamePlay
         {
             _targetBase = targetBase;
         }
-        public void InsertCard(ICardPlayableOnBase card)
+        public void InsertCard( ICardPlayableOnBase card)
         {
             if (IsCardSlotEmpty)
             {
+                IsCardSlotEmpty = false;
                 _card = card;
                 OnCardInsert?.Invoke(card);
             }
@@ -27,7 +28,10 @@ namespace GamePlay
             {
                 return;
             }
-            _card.CardEffect(_targetBase);
+            if (_card is MinionCard minionCard)
+            {
+                minionCard.CardEffect(_targetBase,GameManager.Instance.PlayerData);
+            }
         }
         
         public void MinionAttack()
@@ -40,6 +44,11 @@ namespace GamePlay
             {
                 minionCard.AttackBaseResolution(_targetBase);
             }
+        }
+
+        public Base GetTargetBase()
+        {
+            return _targetBase;
         }
     }
 }

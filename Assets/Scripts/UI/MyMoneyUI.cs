@@ -15,7 +15,7 @@ namespace UI
         
         private void Update()
         {
-            _moneyText.text =GameManager.Instance.myMoney.ToString();
+            _moneyText.text =GameManager.Instance.PlayerData.myMoney.ToString();
         }
     }
 }
